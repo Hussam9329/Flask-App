@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>البحث عن الطالب</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background: #243B55;
+            color: white;
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 400px;
+            margin: auto;
+            margin-top: 100px;
+        }
+        .input-box {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        .button {
+            width: 100%;
+            padding: 12px;
+            font-size: 18px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .submit-btn {
+            background-color: #28A745;
+            color: white;
+        }
+        .submit-btn:hover {
+            background-color: #1e7e34;
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>🔍 البحث عن الطالب في {{ institute }}</h1>
+        <form method="POST">
+            <input type="text" name="student_id" class="input-box" placeholder="أدخل الرقم المميز" required>
+            <button class="button submit-btn" type="submit">🔎 بحث</button>
+        </form>
+    </div>
+
+</body>
+</html>

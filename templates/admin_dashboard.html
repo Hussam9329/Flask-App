@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة تحكم مسؤول الدرجات</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to right, #141E30, #243B55);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            width: 100vw;
+            flex-direction: column;
+            text-align: center;
+            color: white;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .dashboard-container {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            width: 350px;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 20px;
+            margin-bottom: 30px;
+        }
+
+        .institution-name {
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 40px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        button {
+            width: 100%;
+            padding: 10px 20px;
+            font-size: 16px;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.3s;
+            margin: 10px 0;
+        }
+
+        .button {
+            background: linear-gradient(to right, #007BFF, #0056b3);
+            color: white;
+        }
+
+        .button:hover {
+            background: linear-gradient(to right, #0056b3, #003d82);
+            transform: scale(1.05);
+        }
+
+        .logout-btn {
+            background: linear-gradient(to right, #d9534f, #c9302c);
+            color: white;
+            font-size: 14px;
+        }
+
+        .logout-btn:hover {
+            background: linear-gradient(to right, #c9302c, #a52a2a);
+            transform: scale(1.05);
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="dashboard-container">
+    <!-- اسم المعهد مع رفع المسافة وزيادة الحجم -->
+    <div class="institution-name">
+        لوحة مسؤول الدرجات
+    </div>
+
+    <!-- تقليل حجم "اختر المعهد لو سمحت" -->
+    <h1>اختر المعهد لو سمحت</h1>
+
+    <!-- الأزرار للأقسام المختلفة -->
+    <button class="button" onclick="window.location.href='/zyona'">زيونة</button>
+    <button class="button" onclick="window.location.href='/Bnook'">البنوك</button>
+    <button class="button" onclick="window.location.href='/Sleck'">صليخ</button>
+    <button class="button" onclick="window.location.href='/Mansor'">المنصور</button>
+
+    <!-- زر تسجيل الخروج مع مسافة بسيطة تحت الأزرار -->
+    <div style="margin-top: 20px;">
+        <button class="logout-btn" onclick="window.location.href='/'">تسجيل الخروج</button>
+    </div>
+</div>
+
+</body>
+</html>

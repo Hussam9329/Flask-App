@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تعديل بيانات الامتحان</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background: #243B55;
+            color: white;
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 900px;
+            margin: auto;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            direction: rtl;
+            background-color: white;
+            color: black;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        th, td {
+            padding: 12px;
+            border: 1px solid #ddd;
+            text-align: center;
+            font-size: 14px;
+        }
+        th {
+            background-color: #007BFF;
+            color: white;
+        }
+        tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+        tr:hover {
+            background-color: #e9ecef;
+            transition: 0.3s;
+        }
+        .editable-cell {
+            cursor: pointer;
+            padding: 10px;
+        }
+        .editable-cell:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        .edit-input {
+            width: 100%;
+            padding: 5px;
+            border: none;
+            text-align: center;
+            display: none; /* مخفي افتراضياً */
+        }
+        .button {
+            padding: 12px;
+            font-size: 16px;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 10px;
+            transition: 0.3s;
+        }
+        .save-btn { background-color: #28A745; color: white; }
+        .save-btn:hover { background-color: #1e7e34; transform: scale(1.05); }
+        .home-btn { background-color: #007BFF; color: white; }
+        .home-btn:hover { background-color: #0056b3; transform: scale(1.05); }
+        .logout-btn { background-color: #d9534f; color: white; }
+        .logout-btn:hover { background-color: #c9302c; transform: scale(1.05); }
+        .search-box {
+            width: 100%;
+            padding: 10px;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+    </style>
+    <script>
+        function filterTable() {
+            let input = document.getElementById("searchInput").value.toLowerCase().trim();
+            let table = document.getElementById("gradesTable");
+            let rows = table.getElementsByTagName("tr");
+            for (let i = 1; i < rows.length; i++) {
+                let studentID = rows[i].getElementsByTagName("td")[1].textContent.toLowerCase();
+                let studentName = rows[i].getElementsByTagName("td")[2].textContent.toLowerCase();
+                rows[i].style.display = (studentID.includes(input) || studentName.includes(input)) ? "" : "none";
+            }
+        }
+
+        function editCell(cell) {
+            let span = cell.querySelector("span");
+            let input = cell.querySelector("input");
+            if (span && input) {
+                span.style.display = "none";
+                input.style.display = "inline-block";
+                input.focus();
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", function () {
+            let editableCells = document.querySelectorAll(".editable-cell");
+
+            editableCells.forEach(cell => {
+                cell.addEventListener("dblclick", function () {
+                    editCell(this);
+                });
+
+                let input = cell.querySelector("input");
+                input.addEventListener("blur", function () {
+                    cell.querySelector("span").innerText = input.value || "-";
+                    input.style.display = "none";
+                    cell.querySelector("span").style.display = "inline";
+                });
+
+                input.addEventListener("keydown", function (event) {
+                    if (event.key === "Enter") {
+                        input.blur();
+                    }
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+
+    <div class="container">
+        <h1>🕒 آخر تحديث: {{ last_update }}</h1>
+
+        <!-- مربع البحث -->
+        <input type="text" id="searchInput" class="search-box" onkeyup="filterTable()" placeholder="🔍 البحث عن طالب...">
+
+        <!-- نموذج تعديل البيانات -->
+        <form method="POST">
+            <table id="gradesTable">
+                <thead>
+                    <tr>
+                        <th>التسلسل</th>
+                        <th>الرقم المميز</th>
+                        <th>اسم الطالب</th>
+                        {% for exam in exam_columns %}
+                        <th>{{ exam }}</th>
+                        {% endfor %}
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for student in students %}
+                    <tr>
+                        <td>{{ loop.index }}</td>
+                        <td>{{ student['student_id'] }}</td>
+                        <input type="hidden" name="student_id[]" value="{{ student['student_id'] }}">
+
+                        <!-- اسم الطالب -->
+                        <td class="editable-cell">
+                            <span>{{ student['student_name'] }}</span>
+                            <input type="text" name="student_name[]" value="{{ student['student_name'] }}" class="edit-input">
+                        </td>
+
+                        {% for exam in exam_columns %}
+                        <!-- درجات الامتحانات -->
+                        <td class="editable-cell">
+                            <span>{{ student.get(exam, '') }}</span>
+                            <input type="number" name="grades[{{ student['student_id'] }}][{{ exam }}]" value="{{ student.get(exam, '') }}" class="edit-input">
+                        </td>
+                        {% endfor %}
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            <!-- أزرار التحكم -->
+            <div style="margin-top: 20px; display: flex; justify-content: center; gap: 10px;">
+                <button class="button save-btn" type="submit">💾 حفظ التعديلات</button>
+                <button class="button home-btn" type="button" onclick="window.location.href='/admin_dashboard'">🏠 القائمة الرئيسية</button>
+                <button class="button logout-btn" type="button" onclick="window.location.href='/'">🚪 تسجيل الخروج</button>
+            </div>
+        </form>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>شاشة الدخول</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to right, #141E30, #243B55);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            width: 100vw;
+            overflow: hidden;
+            flex-direction: column;
+            text-align: center;
+            color: white;
+            font-family: 'Arial', sans-serif;
+        }
+
+        video {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            max-width: 1080px;
+            max-height: 1920px;
+            transition: opacity 1s ease-in-out;
+        }
+
+        .button-container {
+            display: none;
+            flex-direction: column;
+            gap: 20px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 280px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+        }
+
+        h1 {
+            font-size: 26px;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            font-weight: bold;
+        }
+
+        button {
+            width: 100%;
+            padding: 15px;
+            font-size: 18px;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease-in-out;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+        }
+
+        .parent-btn {
+            background: linear-gradient(to right, #007BFF, #0056b3);
+            color: white;
+        }
+
+        .parent-btn:hover {
+            background: linear-gradient(to right, #0056b3, #003d82);
+            transform: scale(1.05);
+        }
+
+        .student-btn {
+            background: linear-gradient(to right, #28A745, #1e7e34);
+            color: white;
+        }
+
+        .student-btn:hover {
+            background: linear-gradient(to right, #1e7e34, #155724);
+            transform: scale(1.05);
+        }
+
+    </style>
+</head>
+<body>
+
+    <video autoplay muted playsinline id="introVideo">
+        <source src="{{ url_for('static', filename='videos/intro.mp4') }}" type="video/mp4">
+        متصفحك لا يدعم تشغيل الفيديو.
+    </video>
+
+    <div class="button-container" id="buttonContainer">
+        <h1>هل أنت؟</h1>
+        <button class="parent-btn" onclick="window.location.href='/parent'">ولي أمر</button>
+        <button class="student-btn" onclick="redirectToLogin()">مسؤول الدرجات</button>
+    </div>
+
+    <script>
+        setTimeout(() => {
+            document.getElementById("introVideo").style.opacity = "0"; // إخفاء الفيديو بسلاسة
+            setTimeout(() => {
+                document.getElementById("introVideo").style.display = "none";
+                let buttonContainer = document.getElementById("buttonContainer");
+                buttonContainer.style.display = "flex";
+                buttonContainer.style.opacity = "1"; // ظهور الأزرار تدريجيًا
+            }, 1000); // تأخير الاختفاء
+        }, 3000); // تقليل مدة عرض الفيديو
+
+        function redirectToLogin() {
+            document.getElementById("buttonContainer").style.opacity = "0"; // إخفاء الأزرار قبل الانتقال
+            setTimeout(() => {
+                window.location.href = "/admin_login";
+            }, 500);
+        }
+    </script>
+
+</body>
+</html>

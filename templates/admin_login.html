@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تسجيل الدخول - مسؤول الدرجات</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to right, #141E30, #243B55);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            width: 100vw;
+            flex-direction: column;
+            text-align: center;
+            color: white;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .login-container {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            width: 320px;
+        }
+
+        h1 {
+            font-size: 24px;
+            margin-bottom: 15px;
+        }
+
+        .input-container {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+            align-items: center;
+        }
+
+        input {
+            flex: 1; /* يجعل الحقل يأخذ المساحة المتاحة */
+            padding: 10px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            text-align: center;
+            max-width: 180px; /* ضمان عدم تمدد الحقل كثيرًا */
+        }
+
+        button {
+            flex: 0.3; /* يجعل الزر يأخذ مساحة متناسقة */
+            padding: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .login-btn {
+            background: linear-gradient(to right, #007BFF, #0056b3);
+            color: white;
+        }
+
+        .login-btn:hover {
+            background: linear-gradient(to right, #0056b3, #003d82);
+            transform: scale(1.05);
+        }
+
+        .error-message {
+            color: #ff4c4c;
+            font-weight: bold;
+            margin-top: 10px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="login-container">
+        <h1>أدخل الرمز السري</h1>
+        <form method="POST">
+            <div class="input-container">
+                <input type="password" name="password" placeholder="••••••••" required maxlength="8">
+                <button class="login-btn" type="submit">دخول</button>
+            </div>
+        </form>
+        {% if error %}
+        <p class="error-message">{{ error }}</p>
+        {% endif %}
+    </div>
+
+</body>
+</html>

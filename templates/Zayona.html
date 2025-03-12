@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>واجهة زيونة - مسؤول الدرجات</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to right, #141E30, #243B55);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            width: 100vw;
+            flex-direction: column;
+            text-align: center;
+            color: white;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            width: 90%;
+            max-width: 600px;
+        }
+
+        h1 {
+            font-size: 22px;
+            margin-bottom: 15px;
+        }
+
+        .form-group {
+            text-align: right;
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            font-size: 16px;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 10px;
+            font-size: 14px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+            text-align: right;
+        }
+
+        .button {
+            padding: 12px;
+            font-size: 16px;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 10px;
+            transition: 0.3s;
+        }
+
+        .upload-btn {
+            background-color: #007BFF;
+            color: white;
+        }
+
+        .upload-btn:hover {
+            background-color: #0056b3;
+            transform: scale(1.05);
+        }
+
+        .logout-btn {
+            background-color: #d9534f;
+            color: white;
+        }
+
+        .logout-btn:hover {
+            background-color: #c9302c;
+            transform: scale(1.05);
+        }
+
+        .table-container {
+            width: 100%;
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+            direction: rtl;
+            background-color: white;
+            color: black;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        th, td {
+            padding: 12px;
+            border: 1px solid #ddd;
+            text-align: center;
+            font-size: 14px;
+        }
+
+        th {
+            background-color: #007BFF;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+
+        tr:hover {
+            background-color: #e9ecef;
+            transition: 0.3s;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 15px;
+            }
+
+            h1 {
+                font-size: 18px;
+            }
+
+            label {
+                font-size: 14px;
+            }
+
+            input, select {
+                font-size: 14px;
+            }
+
+            th, td {
+                font-size: 12px;
+                padding: 6px;
+            }
+        }
+
+        .view-btn {
+            background-color: #17a2b8;
+            color: white;
+            margin-top: 10px;
+            padding: 12px;
+            font-size: 16px;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            width: 100%;
+            transition: 0.3s;
+        }
+
+        .view-btn:hover {
+            background-color: #138496;
+            transform: scale(1.05);
+        }
+
+    </style>
+</head>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        document.getElementById("uploadForm").addEventListener("submit", function(event) {
+            let confirmation = confirm("⚠️ سيتم حذف جميع البيانات السابقة واستبدالها بالملف الجديد! هل تريد المتابعة؟");
+            if (!confirmation) {
+                event.preventDefault(); // يمنع إرسال النموذج إذا رفض المستخدم
+            }
+        });
+    });
+</script>
+
+
+<body>
+
+    <div class="container">
+        <h1>📌 أنت الآن في معهد زيونة</h1>
+
+        <!-- نموذج رفع ملف الدرجات -->
+<form method="POST" enctype="multipart/form-data" id="uploadForm">
+
+            <div class="form-group">
+                <label for="file-upload">📂 اختر ملف الدرجات:</label>
+                <input type="file" id="file-upload" name="file" accept=".xlsx" required>
+            </div>
+
+<button class="button upload-btn">
+    <i class="fas fa-upload"></i> ⬆️ رفع الملف
+</button>
+
+
+        </form>
+
+        <!-- عرض الجدول بعد رفع الملف -->
+        <div class="table-container">
+            {% if grades_data %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>التسلسل</th>
+                        <th>الرقم المميز</th>
+                        <th>اسم الطالب</th>
+                        {% for exam in exam_columns %}
+                        <th>{{ exam }}</th>
+                        {% endfor %}
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for grade in grades_data %}
+                    <tr>
+                        <td>{{ loop.index }}</td>
+                        <td>{{ grade['الرقم المميز'] }}</td>
+                        <td>{{ grade['اسم الطالب'] }}</td>
+                        {% for exam in exam_columns %}
+                        <td>{{ grade.get(exam, '') }}</td>
+                        {% endfor %}
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% else %}
+            <p>📌 لم يتم رفع أي ملف بعد.</p>
+            {% endif %}
+        </div>
+        <button class="button view-btn" onclick="window.location.href='/edit_exam'">⚙️ إدارة الدرجات</button>
+
+        <!-- زر تسجيل الخروج -->
+        <button class="button logout-btn" onclick="window.location.href='/admin_dashboard'">🚪 تسجيل الخروج</button>
+    </div>
+
+</body>
+</html>

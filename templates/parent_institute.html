@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>اختيار المعهد</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background: #243B55;
+            color: white;
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 400px;
+            margin: auto;
+            margin-top: 100px;
+        }
+        .button {
+            width: 100%;
+            padding: 12px;
+            margin-top: 10px;
+            font-size: 18px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .submit-btn {
+            background-color: #007BFF;
+            color: white;
+        }
+        .submit-btn:hover {
+            background-color: #0056b3;
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>📍 اختر المعهد</h1>
+        <form method="POST">
+            <select name="institute" required style="width: 100%; padding: 10px; font-size: 16px;">
+                <option value="" disabled selected>اختر المعهد...</option>
+                <option value="زيونة">زيونة</option>
+                <option value="البنوك">البنوك</option>
+                <option value="صليخ">صليخ</option>
+                <option value="المنصور">المنصور</option>
+            </select>
+            <button class="button submit-btn" type="submit">➡️ متابعة</button>
+        </form>
+    </div>
+
+</body>
+</html>

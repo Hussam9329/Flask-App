@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نتائج الطالب</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #243B55;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 400px;
+            margin: auto;
+        }
+        h2 {
+            margin-bottom: 5px;
+            font-size: 22px;
+            font-weight: bold;
+        }
+        p {
+            font-size: 18px;
+            margin: 5px 0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        th, td {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+            text-align: center;
+            color: black;
+        }
+        th {
+            background-color: #007BFF;
+            color: white;
+        }
+        .back-btn, .print-btn {
+            background: #d9534f;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 15px;
+            font-size: 16px;
+        }
+        .print-btn {
+            background: #28a745;
+        }
+        .print-btn:hover {
+            background: #218838;
+        }
+        .back-btn:hover {
+            background: #c9302c;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>📌 نتائج الطالب</h2>
+        <p> المعهد: {{ institute }}</p>
+        <p> الرقم المميز: <b>{{ student['student_id'] }}</b></p>
+        <p>👤 اسم الطالب: <b>{{ student['student_name'] }}</b></p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>الدرجة</th>  <!-- تم عكس الترتيب -->
+                    <th>الامتحان</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for exam, grade in student.items() %}
+                    {% if "الامتحان" in exam %}
+                        <tr>
+                            <td>{{ grade }}</td>  <!-- تم عكس الترتيب -->
+                            <td>{{ exam }}</td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <button class="print-btn" onclick="window.print()">🖨️ طباعة التقرير</button>
+        <button class="back-btn" onclick="window.location.href='/parent'">🔙 رجوع</button>
+    </div>
+
+</body>
+</html>

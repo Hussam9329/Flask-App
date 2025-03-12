@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>استعلام ولي الأمر</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #243B55;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 400px;
+            margin: auto;
+        }
+        .form-group {
+            width: 100%;
+            margin-bottom: 15px;
+        }
+        label {
+            font-size: 16px;
+            margin-bottom: 5px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: start;
+        }
+        select, input {
+            width: 100%;
+            height: 45px; /* جعل الارتفاع موحد */
+            padding: 10px;
+            font-size: 16px;
+            border: none;
+            border-radius: 8px;
+            text-align: center;
+            box-sizing: border-box;
+        }
+        button {
+            background: #007BFF;
+            color: white;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 18px;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        .error-message {
+            color: #ff4c4c;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>🔍 استعلام ولي الأمر</h1>
+        <form method="POST">
+
+            <!-- اختيار المعهد -->
+            <div class="form-group">
+                <label for="institute">📍 اختر المعهد:</label>
+                <select name="institute" id="institute" required>
+                    <option value="" disabled selected>اختر المعهد...</option>
+                    <option value="زيونة">زيونة</option>
+                    <option value="البنوك">البنوك</option>
+                    <option value="صليخ">صليخ</option>
+                    <option value="المنصور">المنصور</option>
+                </select>
+            </div>
+
+            <!-- إدخال الرقم المميز -->
+            <div class="form-group">
+                <label for="student_id">🆔 أدخل الرقم المميز:</label>
+                <input type="text" id="student_id" name="student_id" placeholder="أدخل الرقم المميز" required>
+            </div>
+
+            <!-- زر البحث -->
+            <button type="submit">📊 عرض الدرجات</button>
+
+        </form>
+
+        {% if error %}
+        <p class="error-message">{{ error }}</p>
+        {% endif %}
+    </div>
+
+</body>
+</html>
